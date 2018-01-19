@@ -1,17 +1,15 @@
 import React from 'react';
-import { render } from 'react-dom';
-import Hello from './Hello';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
-const styles = {
-  fontFamily: 'sans-serif',
-  textAlign: 'center',
-};
+import App from './components/app';
+import reducers from './reducers';
 
-const App = () => (
-  <div style={styles}>
-    <Hello name="CodeSandbox" />
-    <h2>Start editing to see some magic happen {'\u2728'}</h2>
-  </div>
-);
+const createStoreWithMiddleware = applyMiddleware()(createStore);
 
-render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <App />
+  </Provider>
+  , document.querySelector('.container'));
